@@ -1,6 +1,6 @@
 import React from 'react'
-import { Button } from '../../../../components/atoms/button'
-import { InputText } from '../../../../components/atoms/inputtext'
+import { Button } from '../../../../components/atoms/input/button'
+import { InputText } from '../../../../components/atoms/input/inputtext'
 import { useLoginAuth } from './useLoginAuth'
 
 export const LoginAuth = (): JSX.Element => {
@@ -14,14 +14,14 @@ export const LoginAuth = (): JSX.Element => {
         <dl className="flex flex-row flex-wrap justify-evenly">
           <dt className={`${dtClassName} mb-4`}>ユーザーID</dt>
           <dd className="h-8">
-            <InputText maxLength={30} value={state.userId} setValue={setUserId} />
+            <InputText maxLength={30} value={state.userId} setValue={setUserId} styleType="login" />
           </dd>
           <dt className={dtClassName}>パスワード</dt>
           <dd className="h-8">
-            <InputText maxLength={30} value={state.password} setValue={setPassword} />
+            <InputText maxLength={30} value={state.password} setValue={setPassword} styleType="login" />
           </dd>
         </dl>
-        <Button caption="ログイン" event={tryLoginAuth} />
+        <Button caption="ログイン" event={tryLoginAuth} styleType="login" />
       </div>
     </>
   )
