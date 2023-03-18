@@ -5,11 +5,9 @@ import { AdminPageBase } from '../../templates/admin/adminPageBase'
 
 const Login: NextPage = () => {
   return (
-    <>
-      <AdminPageBase>
-        <LoginPage />
-      </AdminPageBase>
-    </>
+    <div id="wrap" className="m-10">
+      <LoginPage />
+    </div>
   )
 }
 
