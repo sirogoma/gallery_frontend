@@ -16,8 +16,8 @@ export type Scalars = {
   Float: number;
 };
 
-export type Gallary = {
-  __typename?: 'Gallary';
+export type Gallery = {
+  __typename?: 'Gallery';
   created_at?: Maybe<Scalars['Int']>;
   deleted_at?: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
@@ -27,21 +27,59 @@ export type Gallary = {
   updated_at?: Maybe<Scalars['Int']>;
   user: User;
   user_id: Scalars['Int'];
+  works: Array<Work>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  addGallery: Gallery;
+  addWork: Scalars['ID'];
+  addWorkPage: Scalars['Int'];
+  userSignup: Scalars['Int'];
+};
+
+
+export type MutationAddGalleryArgs = {
+  name: Scalars['String'];
+  userId: Scalars['Float'];
+};
+
+
+export type MutationAddWorkArgs = {
+  gallery_id: Scalars['Float'];
+  name: Scalars['String'];
+  userId: Scalars['Float'];
+};
+
+
+export type MutationAddWorkPageArgs = {
+  image_url: Scalars['String'];
+  sort: Scalars['Float'];
+  work_id: Scalars['Float'];
+};
+
+
+export type MutationUserSignupArgs = {
+  login_id: Scalars['String'];
+  name: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  gallaries: Array<Gallary>;
+  galleries: Array<Gallery>;
   tryLoginAuth: Scalars['Boolean'];
   users: Array<User>;
+  works: Array<Work>;
 };
 
 
-export type QueryGallariesArgs = {
+export type QueryGalleriesArgs = {
   id?: InputMaybe<Scalars['Float']>;
   is_active?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
   theme?: InputMaybe<Scalars['Float']>;
+  user_id?: InputMaybe<Scalars['Float']>;
 };
 
 
@@ -57,11 +95,18 @@ export type QueryUsersArgs = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+
+export type QueryWorksArgs = {
+  is_active?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+  user_id?: InputMaybe<Scalars['Float']>;
+};
+
 export type User = {
   __typename?: 'User';
   created_at?: Maybe<Scalars['Int']>;
   deleted_at?: Maybe<Scalars['Int']>;
-  gallaries: Array<Gallary>;
+  gallaries?: Maybe<Array<Gallery>>;
   id: Scalars['Int'];
   login_id: Scalars['String'];
   name: Scalars['String'];
@@ -81,6 +126,45 @@ export type UserSnsId = {
   use_sns_id: Scalars['String'];
   user_id: Scalars['String'];
 };
+
+export type Work = {
+  __typename?: 'Work';
+  caption?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['Int']>;
+  deleted_at?: Maybe<Scalars['Int']>;
+  id: Scalars['Int'];
+  is_active: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at?: Maybe<Scalars['Int']>;
+  user_id: Scalars['Int'];
+  workPages?: Maybe<Array<WorkPage>>;
+};
+
+export type WorkPage = {
+  __typename?: 'WorkPage';
+  created_at?: Maybe<Scalars['Int']>;
+  deleted_at?: Maybe<Scalars['Int']>;
+  id: Scalars['Int'];
+  image_url?: Maybe<Scalars['String']>;
+  sort: Scalars['Int'];
+  updated_at?: Maybe<Scalars['Int']>;
+  work_id: Scalars['Int'];
+};
+
+export type GalleriesQueryVariables = Exact<{
+  userId?: InputMaybe<Scalars['Float']>;
+}>;
+
+
+export type GalleriesQuery = { __typename?: 'Query', galleries: Array<{ __typename?: 'Gallery', name: string, works: Array<{ __typename?: 'Work', name: string, workPages?: Array<{ __typename?: 'WorkPage', image_url?: string | null }> | null }> }> };
+
+export type AddGalleryMutationVariables = Exact<{
+  name: Scalars['String'];
+  userId: Scalars['Float'];
+}>;
+
+
+export type AddGalleryMutation = { __typename?: 'Mutation', addGallery: { __typename?: 'Gallery', id: number, name: string, is_active: boolean, theme_id: number, user_id: number } };
 
 export type TryLoginAuthQueryVariables = Exact<{
   password: Scalars['String'];
@@ -91,6 +175,8 @@ export type TryLoginAuthQueryVariables = Exact<{
 export type TryLoginAuthQuery = { __typename?: 'Query', tryLoginAuth: boolean };
 
 
+export const GalleriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"galleries"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"galleries"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"works"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"workPages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"image_url"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GalleriesQuery, GalleriesQueryVariables>;
+export const AddGalleryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addGallery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addGallery"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"is_active"}},{"kind":"Field","name":{"kind":"Name","value":"theme_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}}]}}]}}]} as unknown as DocumentNode<AddGalleryMutation, AddGalleryMutationVariables>;
 export const TryLoginAuthDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TryLoginAuth"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"login_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tryLoginAuth"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"Argument","name":{"kind":"Name","value":"login_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"login_id"}}}]}]}}]} as unknown as DocumentNode<TryLoginAuthQuery, TryLoginAuthQueryVariables>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -101,8 +187,8 @@ export type Scalars = {
   Float: number;
 };
 
-export type Gallary = {
-  __typename?: 'Gallary';
+export type Gallery = {
+  __typename?: 'Gallery';
   created_at?: Maybe<Scalars['Int']>;
   deleted_at?: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
@@ -112,21 +198,59 @@ export type Gallary = {
   updated_at?: Maybe<Scalars['Int']>;
   user: User;
   user_id: Scalars['Int'];
+  works: Array<Work>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  addGallery: Gallery;
+  addWork: Scalars['ID'];
+  addWorkPage: Scalars['Int'];
+  userSignup: Scalars['Int'];
+};
+
+
+export type MutationAddGalleryArgs = {
+  name: Scalars['String'];
+  userId: Scalars['Float'];
+};
+
+
+export type MutationAddWorkArgs = {
+  gallery_id: Scalars['Float'];
+  name: Scalars['String'];
+  userId: Scalars['Float'];
+};
+
+
+export type MutationAddWorkPageArgs = {
+  image_url: Scalars['String'];
+  sort: Scalars['Float'];
+  work_id: Scalars['Float'];
+};
+
+
+export type MutationUserSignupArgs = {
+  login_id: Scalars['String'];
+  name: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  gallaries: Array<Gallary>;
+  galleries: Array<Gallery>;
   tryLoginAuth: Scalars['Boolean'];
   users: Array<User>;
+  works: Array<Work>;
 };
 
 
-export type QueryGallariesArgs = {
+export type QueryGalleriesArgs = {
   id?: InputMaybe<Scalars['Float']>;
   is_active?: InputMaybe<Scalars['Boolean']>;
   name?: InputMaybe<Scalars['String']>;
   theme?: InputMaybe<Scalars['Float']>;
+  user_id?: InputMaybe<Scalars['Float']>;
 };
 
 
@@ -142,11 +266,18 @@ export type QueryUsersArgs = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+
+export type QueryWorksArgs = {
+  is_active?: InputMaybe<Scalars['Boolean']>;
+  name?: InputMaybe<Scalars['String']>;
+  user_id?: InputMaybe<Scalars['Float']>;
+};
+
 export type User = {
   __typename?: 'User';
   created_at?: Maybe<Scalars['Int']>;
   deleted_at?: Maybe<Scalars['Int']>;
-  gallaries: Array<Gallary>;
+  gallaries?: Maybe<Array<Gallery>>;
   id: Scalars['Int'];
   login_id: Scalars['String'];
   name: Scalars['String'];
@@ -165,6 +296,30 @@ export type UserSnsId = {
   updated_at?: Maybe<Scalars['Int']>;
   use_sns_id: Scalars['String'];
   user_id: Scalars['String'];
+};
+
+export type Work = {
+  __typename?: 'Work';
+  caption?: Maybe<Scalars['String']>;
+  created_at?: Maybe<Scalars['Int']>;
+  deleted_at?: Maybe<Scalars['Int']>;
+  id: Scalars['Int'];
+  is_active: Scalars['Boolean'];
+  name: Scalars['String'];
+  updated_at?: Maybe<Scalars['Int']>;
+  user_id: Scalars['Int'];
+  workPages?: Maybe<Array<WorkPage>>;
+};
+
+export type WorkPage = {
+  __typename?: 'WorkPage';
+  created_at?: Maybe<Scalars['Int']>;
+  deleted_at?: Maybe<Scalars['Int']>;
+  id: Scalars['Int'];
+  image_url?: Maybe<Scalars['String']>;
+  sort: Scalars['Int'];
+  updated_at?: Maybe<Scalars['Int']>;
+  work_id: Scalars['Int'];
 };
 
 
@@ -236,29 +391,37 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Gallary: ResolverTypeWrapper<Gallary>;
+  Gallery: ResolverTypeWrapper<Gallery>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   String: ResolverTypeWrapper<Scalars['String']>;
-  Query: ResolverTypeWrapper<{}>;
+  Mutation: ResolverTypeWrapper<{}>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
+  Query: ResolverTypeWrapper<{}>;
   User: ResolverTypeWrapper<User>;
   UserSnsId: ResolverTypeWrapper<UserSnsId>;
+  Work: ResolverTypeWrapper<Work>;
+  WorkPage: ResolverTypeWrapper<WorkPage>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Gallary: Gallary;
+  Gallery: Gallery;
   Int: Scalars['Int'];
   Boolean: Scalars['Boolean'];
   String: Scalars['String'];
-  Query: {};
+  Mutation: {};
   Float: Scalars['Float'];
+  ID: Scalars['ID'];
+  Query: {};
   User: User;
   UserSnsId: UserSnsId;
+  Work: Work;
+  WorkPage: WorkPage;
 };
 
-export type GallaryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Gallary'] = ResolversParentTypes['Gallary']> = {
+export type GalleryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Gallery'] = ResolversParentTypes['Gallery']> = {
   created_at?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   deleted_at?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -268,19 +431,28 @@ export type GallaryResolvers<ContextType = any, ParentType extends ResolversPare
   updated_at?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   user_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  works?: Resolver<Array<ResolversTypes['Work']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  addGallery?: Resolver<ResolversTypes['Gallery'], ParentType, ContextType, RequireFields<MutationAddGalleryArgs, 'name' | 'userId'>>;
+  addWork?: Resolver<ResolversTypes['ID'], ParentType, ContextType, RequireFields<MutationAddWorkArgs, 'gallery_id' | 'name' | 'userId'>>;
+  addWorkPage?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<MutationAddWorkPageArgs, 'image_url' | 'sort' | 'work_id'>>;
+  userSignup?: Resolver<ResolversTypes['Int'], ParentType, ContextType, RequireFields<MutationUserSignupArgs, 'login_id' | 'name' | 'password'>>;
+};
+
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  gallaries?: Resolver<Array<ResolversTypes['Gallary']>, ParentType, ContextType, Partial<QueryGallariesArgs>>;
+  galleries?: Resolver<Array<ResolversTypes['Gallery']>, ParentType, ContextType, Partial<QueryGalleriesArgs>>;
   tryLoginAuth?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType, RequireFields<QueryTryLoginAuthArgs, 'login_id' | 'password'>>;
   users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUsersArgs, 'id'>>;
+  works?: Resolver<Array<ResolversTypes['Work']>, ParentType, ContextType, Partial<QueryWorksArgs>>;
 };
 
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   created_at?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   deleted_at?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  gallaries?: Resolver<Array<ResolversTypes['Gallary']>, ParentType, ContextType>;
+  gallaries?: Resolver<Maybe<Array<ResolversTypes['Gallery']>>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   login_id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -302,10 +474,37 @@ export type UserSnsIdResolvers<ContextType = any, ParentType extends ResolversPa
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type WorkResolvers<ContextType = any, ParentType extends ResolversParentTypes['Work'] = ResolversParentTypes['Work']> = {
+  caption?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  created_at?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  deleted_at?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  is_active?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  user_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  workPages?: Resolver<Maybe<Array<ResolversTypes['WorkPage']>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type WorkPageResolvers<ContextType = any, ParentType extends ResolversParentTypes['WorkPage'] = ResolversParentTypes['WorkPage']> = {
+  created_at?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  deleted_at?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  image_url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  sort?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  updated_at?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  work_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
-  Gallary?: GallaryResolvers<ContextType>;
+  Gallery?: GalleryResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UserSnsId?: UserSnsIdResolvers<ContextType>;
+  Work?: WorkResolvers<ContextType>;
+  WorkPage?: WorkPageResolvers<ContextType>;
 };
 

@@ -25,7 +25,6 @@ type Actions =
 const reducer = (loginState: LoginStateType, action: Actions): LoginStateType => {
   switch (action.type) {
     case 'INPUT_USER_ID':
-      console.log(action.payload)
       return { ...loginState, ...action.payload }
     case 'INPUT_PASSWORD':
       return { ...loginState, ...action.payload }

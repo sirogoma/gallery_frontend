@@ -13,6 +13,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+    "\n      query galleries($userId: Float) {\n        galleries(user_id: $userId) {\n          name\n          works {\n            name\n            workPages {\n              image_url\n            }\n          }\n        }\n      }\n    ": types.GalleriesDocument,
+    "\n      mutation addGallery($name: String!, $userId: Float!) {\n        addGallery(name: $name, userId: $userId) {\n          id\n          name\n          is_active\n          theme_id\n          user_id\n        }\n      }\n    ": types.AddGalleryDocument,
     "\n      query TryLoginAuth($password: String!, $login_id: String!) {\n        tryLoginAuth(password: $password, login_id: $login_id)\n      }\n    ": types.TryLoginAuthDocument,
 };
 
@@ -30,6 +32,14 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n      query galleries($userId: Float) {\n        galleries(user_id: $userId) {\n          name\n          works {\n            name\n            workPages {\n              image_url\n            }\n          }\n        }\n      }\n    "): (typeof documents)["\n      query galleries($userId: Float) {\n        galleries(user_id: $userId) {\n          name\n          works {\n            name\n            workPages {\n              image_url\n            }\n          }\n        }\n      }\n    "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n      mutation addGallery($name: String!, $userId: Float!) {\n        addGallery(name: $name, userId: $userId) {\n          id\n          name\n          is_active\n          theme_id\n          user_id\n        }\n      }\n    "): (typeof documents)["\n      mutation addGallery($name: String!, $userId: Float!) {\n        addGallery(name: $name, userId: $userId) {\n          id\n          name\n          is_active\n          theme_id\n          user_id\n        }\n      }\n    "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

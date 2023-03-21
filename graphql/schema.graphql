@@ -1,7 +1,8 @@
 type Query {
   users(name: String, login_id: String, id: Float!): [User!]!
   tryLoginAuth(password: String!, login_id: String!): Boolean!
-  gallaries(is_active: Boolean, theme: Float, name: String, id: Float): [Gallary!]!
+  galleries(is_active: Boolean, theme: Float, name: String, user_id: Float, id: Float): [Gallery!]!
+  works(is_active: Boolean, name: String, user_id: Float): [Work!]!
 }
 
 type User {
@@ -13,11 +14,11 @@ type User {
   password: String!
   name: String!
   profile: String
-  gallaries: [Gallary!]!
+  gallaries: [Gallery!]
   snsIds: [UserSnsId!]
 }
 
-type Gallary {
+type Gallery {
   id: Int!
   created_at: Int
   updated_at: Int
@@ -27,6 +28,29 @@ type Gallary {
   theme_id: Int!
   is_active: Boolean!
   user: User!
+  works: [Work!]!
+}
+
+type Work {
+  id: Int!
+  created_at: Int
+  updated_at: Int
+  deleted_at: Int
+  user_id: Int!
+  name: String!
+  caption: String
+  is_active: Boolean!
+  workPages: [WorkPage!]
+}
+
+type WorkPage {
+  id: Int!
+  created_at: Int
+  updated_at: Int
+  deleted_at: Int
+  work_id: Int!
+  sort: Int!
+  image_url: String
 }
 
 type UserSnsId {
@@ -37,4 +61,11 @@ type UserSnsId {
   user_id: String!
   use_sns_id: String!
   sns_user_id: String!
+}
+
+type Mutation {
+  userSignup(name: String!, password: String!, login_id: String!): Int!
+  addGallery(name: String!, userId: Float!): Gallery!
+  addWork(name: String!, gallery_id: Float!, userId: Float!): ID!
+  addWorkPage(sort: Float!, image_url: String!, work_id: Float!): Int!
 }
