@@ -151,21 +151,6 @@ export type WorkPage = {
   work_id: Scalars['Int'];
 };
 
-export type GalleriesQueryVariables = Exact<{
-  userId?: InputMaybe<Scalars['Float']>;
-}>;
-
-
-export type GalleriesQuery = { __typename?: 'Query', galleries: Array<{ __typename?: 'Gallery', name: string, works: Array<{ __typename?: 'Work', name: string, workPages?: Array<{ __typename?: 'WorkPage', image_url?: string | null }> | null }> }> };
-
-export type AddGalleryMutationVariables = Exact<{
-  name: Scalars['String'];
-  userId: Scalars['Float'];
-}>;
-
-
-export type AddGalleryMutation = { __typename?: 'Mutation', addGallery: { __typename?: 'Gallery', id: number, name: string, is_active: boolean, theme_id: number, user_id: number } };
-
 export type TryLoginAuthQueryVariables = Exact<{
   password: Scalars['String'];
   login_id: Scalars['String'];
@@ -174,9 +159,12 @@ export type TryLoginAuthQueryVariables = Exact<{
 
 export type TryLoginAuthQuery = { __typename?: 'Query', tryLoginAuth: boolean };
 
+export type GalleryInfoFragment = { __typename?: 'Gallery', id: number, name: string, is_active: boolean, theme_id: number, user_id: number } & { ' $fragmentName'?: 'GalleryInfoFragment' };
 
-export const GalleriesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"galleries"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"galleries"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"user_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"works"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"workPages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"image_url"}}]}}]}}]}}]}}]} as unknown as DocumentNode<GalleriesQuery, GalleriesQueryVariables>;
-export const AddGalleryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"addGallery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"name"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"userId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Float"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"addGallery"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"name"},"value":{"kind":"Variable","name":{"kind":"Name","value":"name"}}},{"kind":"Argument","name":{"kind":"Name","value":"userId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"userId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"is_active"}},{"kind":"Field","name":{"kind":"Name","value":"theme_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}}]}}]}}]} as unknown as DocumentNode<AddGalleryMutation, AddGalleryMutationVariables>;
+export type GalleryListByUserFragment = { __typename?: 'Gallery', id: number, name: string, is_active: boolean } & { ' $fragmentName'?: 'GalleryListByUserFragment' };
+
+export const GalleryInfoFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"galleryInfo"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Gallery"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"is_active"}},{"kind":"Field","name":{"kind":"Name","value":"theme_id"}},{"kind":"Field","name":{"kind":"Name","value":"user_id"}}]}}]} as unknown as DocumentNode<GalleryInfoFragment, unknown>;
+export const GalleryListByUserFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"galleryListByUser"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Gallery"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"is_active"}}]}}]} as unknown as DocumentNode<GalleryListByUserFragment, unknown>;
 export const TryLoginAuthDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"TryLoginAuth"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"login_id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"tryLoginAuth"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"Argument","name":{"kind":"Name","value":"login_id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"login_id"}}}]}]}}]} as unknown as DocumentNode<TryLoginAuthQuery, TryLoginAuthQueryVariables>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {

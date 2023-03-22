@@ -1,7 +1,8 @@
-import { ApolloQueryResult } from '@apollo/client'
-import { useEffect, useReducer } from 'react'
+import { gql } from '@apollo/client'
+import { useReducer } from 'react'
 import { GalleryAndWorkFetcherIns } from '../../../fetchers/galleryAndWorkFetcher'
-import { Work, Gallery, MutationAddGalleryArgs } from '../../../graphql/graphql'
+import { useFragment } from '../../../graphql'
+import { Work, Gallery, MutationAddGalleryArgs, AddGalleryMutation } from '../../../graphql/graphql'
 
 type RemoveGalleryType = 'user' | 'works'
 
@@ -45,6 +46,17 @@ const reducer = (AdminAddState: AdminAddStateType, action: Actions): AdminAddSta
   }
 }
 
+// コンポーネントと１：１になる気がするので、ここではない気がする
+const galleryInfoFragment = gql`
+  fragment galleryInfo on Gallery {
+    id
+    name
+    is_active
+    theme_id
+    user_id
+  }
+`
+
 export const useAdminAdd = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
@@ -61,7 +73,7 @@ export const useAdminAdd = () => {
       name: state.inputGalleryName,
       userId: 5 // TODO:動的にUserIdにする
     }
-    const result = await GalleryAndWorkFetcherIns.addGallery(parms)
+    const result = await GalleryAndWorkFetcherIns.addGallery(parms, galleryInfoFragment, 'galleryInfo')
     setGallery(result.data.addGallery)
   }
 

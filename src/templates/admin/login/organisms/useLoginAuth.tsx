@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router'
 import { useReducer } from 'react'
 import { UserFetcher } from '../../../../fetchers/userFetcher'
 import { QueryTryLoginAuthArgs } from '../../../../graphql/graphql'
@@ -35,6 +36,7 @@ const reducer = (loginState: LoginStateType, action: Actions): LoginStateType =>
 
 export const useLoginAuth = () => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const router = useRouter()
 
   const setUserId = (value: string) => {
     dispatch({ type: 'INPUT_USER_ID', payload: { userId: value } })
@@ -55,7 +57,8 @@ export const useLoginAuth = () => {
     const result = await obj.tryLoginAuth(val)
 
     if (result.data.tryLoginAuth) {
-      alert('ログイン成功')
+      // TODO: 認証情報をCookieに食わす
+      router.push('/admin')
     } else {
       alert('ログイン失敗')
     }
