@@ -1,15 +1,16 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import { AdminPageBase } from '../../templates/admin/adminPageBase'
+import { AdminEdit } from '../../templates/admin/edit/edit'
 
-const AdminEdit: NextPage = () => {
+const AdminEditPage: NextPage = () => {
   return (
     <>
       <AdminPageBase>
-        <div>ギャラリー編集(templateTODO)</div>
+        <AdminEdit />
       </AdminPageBase>
     </>
   )
 }
 
-export default AdminEdit
+export default AdminEditPage
